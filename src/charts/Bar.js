@@ -212,24 +212,24 @@ class Bar {
           color: fillColor
         })
 
-        elSeries = this.renderSeries({
-          realIndex,
-          pathFill,
-          j,
-          i,
-          pathFrom,
-          pathTo,
-          strokeWidth,
-          elSeries,
-          x,
-          y,
-          series,
-          barHeight,
-          barWidth,
-          elDataLabelsWrap,
-          visibleSeries: this.visibleI,
-          type: 'bar'
-        })
+        // elSeries = this.renderSeries({
+        //   realIndex,
+        //   pathFill,
+        //   j,
+        //   i,
+        //   pathFrom,
+        //   pathTo,
+        //   strokeWidth,
+        //   elSeries,
+        //   x,
+        //   y,
+        //   series,
+        //   barHeight,
+        //   barWidth,
+        //   elDataLabelsWrap,
+        //   visibleSeries: this.visibleI,
+        //   type: 'bar'
+        // })
       }
 
       // push all x val arrays into main xArr
@@ -280,22 +280,25 @@ class Bar {
         (w.config.chart.animations.speed / w.globals.dataPoints)) /
       2.4
 
-    let renderedPath = graphics.renderPaths({
-      i,
-      j,
-      realIndex,
-      pathFrom: pathFrom,
-      pathTo: pathTo,
-      stroke: lineFill,
-      strokeWidth,
-      strokeLineCap: w.config.stroke.lineCap,
-      fill: pathFill,
-      animationDelay: delay,
-      initialSpeed: w.config.chart.animations.speed,
-      dataChangeSpeed: w.config.chart.animations.dynamicAnimation.speed,
-      className: `apexcharts-${type}-area`,
-      id: `apexcharts-${type}-area`
-    })
+    console.log(pathTo)
+    let renderedPath = pathTo
+
+    // let renderedPath = graphics.renderPaths({
+    //   i,
+    //   j,
+    //   realIndex,
+    //   pathFrom: pathFrom,
+    //   pathTo: pathTo,
+    //   stroke: lineFill,
+    //   strokeWidth,
+    //   strokeLineCap: w.config.stroke.lineCap,
+    //   fill: pathFill,
+    //   animationDelay: delay,
+    //   initialSpeed: w.config.chart.animations.speed,
+    //   dataChangeSpeed: w.config.chart.animations.dynamicAnimation.speed,
+    //   className: `apexcharts-${type}-area`,
+    //   id: `apexcharts-${type}-area`
+    // })
 
     const filters = new Filters(this.ctx)
     filters.setSelectionFilter(renderedPath, realIndex, j)
@@ -579,18 +582,32 @@ class Bar {
           2
     }
 
-    pathTo =
-      pathTo +
-      graphics.line(barXPosition, y) +
-      graphics.line(barXPosition + barWidth - strokeWidth, y) +
-      graphics.line(barXPosition + barWidth - strokeWidth, zeroH) +
-      graphics.line(barXPosition, zeroH)
-    pathFrom =
-      pathFrom +
-      graphics.line(barXPosition, zeroH) +
-      graphics.line(barXPosition + barWidth - strokeWidth, zeroH) +
-      graphics.line(barXPosition + barWidth - strokeWidth, zeroH) +
-      graphics.line(barXPosition, zeroH)
+    // pathTo =
+    //   pathTo +
+    //   graphics.line(barXPosition, y) +
+    //   graphics.line(barXPosition + barWidth - strokeWidth, y) +
+    //   graphics.line(barXPosition + barWidth - strokeWidth, zeroH) +
+    //   graphics.line(barXPosition, zeroH)
+    // pathFrom =
+    //   pathFrom +
+    //   graphics.line(barXPosition, zeroH) +
+    //   graphics.line(barXPosition + barWidth - strokeWidth, zeroH) +
+    //   graphics.line(barXPosition + barWidth - strokeWidth, zeroH) +
+    //   graphics.line(barXPosition, zeroH)
+
+    pathTo = graphics.drawRect(
+      barXPosition,
+      y,
+      barWidth - strokeWidth,
+      zeroH - strokeWidth
+    )
+
+    pathFrom = graphics.drawRect(
+      barXPosition,
+      zeroH,
+      barWidth - strokeWidth,
+      zeroH - strokeWidth
+    )
 
     if (!w.globals.isXNumeric) {
       x = x + xDivision
